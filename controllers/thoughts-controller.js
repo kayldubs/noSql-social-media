@@ -1,8 +1,8 @@
-const { User, Thought, Reaction } = require('../models');
+const { User, Thoughts, Reaction } = require('../models');
 
 const thoughtsController = {
     getAllThoughts(req, res) {
-        Thought.find({})
+        Thoughts.find({})
         .populate({ path: 'reactions', select: '-__v' })
         .select('-__v')
         .then(dbThoughtsData => res.json(dbThoughtsData))
@@ -13,7 +13,7 @@ const thoughtsController = {
     },
 
     getThoughtsById({ params }, res) {
-        thoughtsController.findOne({ _id: params.id })
+        Thoughts.findOne({ _id: params.id })
         .populate({ path: 'reactions', select: '-__v' })
         .select('-__v')
         .then(dbThoughtsData => {
@@ -109,7 +109,7 @@ const thoughtsController = {
         )
         .then(dbThoughtsData => {
             if (!dbThoughtsData) {
-                res.status(404).json({ message: 'No thought found with this ID'});
+                res.status(404).json({ message: 'No reaction found with this ID'});
                 return;
             }
             res.json({ message: ' Reaction has been deleted'});
